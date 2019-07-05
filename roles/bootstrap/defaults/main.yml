@@ -1,0 +1,9 @@
+---
+centos_epel_enabled: false
+centos_fastestmirror_enabled: false
+
+data_root: /data
+nginx_log: /var/log/nginx
+supervisor_log: /var/log/supervisor
+log_root: /var/log/ln
+ln_workdir: /usr/share/ln

@@ -1,0 +1,15 @@
+---
+- hosts: all
+  roles:
+    - { role: bootstrap, tags: bootstrap }
+    - { role: docker, tags: docker }
+    - { role: codo, tags: codo }
+#    - { role: codoadmin, tags: codoadmin }
+#    - { role: codotask, tags: codotask }
+#    - { role: codocmdb, tags: codocmdb }
+#    - { role: codocron, tags: codocron }
+#    - { role: codotask, tags: codotask }
+#    - { role: codokerrigan, tags: codokerrigan }
+#    - { role: codoops, tags: codoops }
+#    - { role: cododns, tags: cododns }
+#    - { role: codogateway, tags: codogateway }

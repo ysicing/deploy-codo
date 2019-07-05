@@ -1,0 +1,8 @@
+---
+- name: copy dns resolv.conf
+  template:
+    src: resolv.conf
+    dest: /etc/resolv.conf
+
+- name: restart gateway
+  shell: "docker-compose -f {{ ln_workdir }}/docker-compose.yaml restart gateway"

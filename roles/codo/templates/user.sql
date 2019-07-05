@@ -1,0 +1,1 @@
+INSERT INTO `mg_users` VALUES (1,'{{ CODO_USER }}','{{ CODO_PASS }}','{{ CODO_USER }}','test@example.com','4008005566','','','{{ CODO_USER }}','','0','0','127.0.0.1','2019-05-24 10:39:29','2017-12-21 14:26:04');

@@ -1,0 +1,250 @@
+version: '2.1'
+services:
+  admin:
+    image: {{ image_pre }}/admin:{{ ln_version }}
+    container_name: admin
+    volumes:
+      - /var/log/supervisor/admin:/var/log/supervisor
+      - /sys/fs/cgroup:/sys/fs/cgroup
+      - {{ ln_workdir }}/ngxconf/admin.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8010:80"
+    environment:
+      - COOKIE_SECRET={{ COOKIE_SECRET }}
+      - TOKEN_SECRET={{ TOKEN_SECRET }}
+      - SECRET_KEY={{ SECRET_KEY }}
+      - DEFAULT_REDIS_HOST={{ REDIS_HOST }}
+      - DEFAULT_REDIS_PORT={{ REDIS_PORT }}
+      - DEFAULT_REDIS_PASSWORD={{ REDIS_PASSWORD }}
+      - DEFAULT_DB_DBHOST={{ DEFAULT_DB_DBHOST }}
+      - DEFAULT_DB_DBPORT={{ DEFAULT_DB_DBPORT }}
+      - DEFAULT_DB_DBUSER={{ DEFAULT_DB_DBUSER }}
+      - DEFAULT_DB_DBPWD={{ DEFAULT_DB_DBPWD }}
+      - READONLY_DB_DBHOST={{ READONLY_DB_DBHOST }}
+      - READONLY_DB_DBPORT={{ READONLY_DB_DBPORT }}
+      - READONLY_DB_DBUSER={{ READONLY_DB_DBUSER }}
+      - READONLY_DB_DBPWD={{ READONLY_DB_DBPWD  }}
+      - ADMIN_DB_DBNAME=codo_admin
+    restart: always
+  cmdb:
+    image: {{ image_pre }}/cmdb:{{ ln_version }}
+    container_name: cmdb
+    volumes:
+      - /var/log/supervisor/cmdb:/var/log/supervisor
+      - /sys/fs/cgroup:/sys/fs/cgroup
+      - /root/.ssh:/root/.ssh
+      - {{ ln_workdir }}/ngxconf/cmdb.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8050:80"
+    environment:
+      - COOKIE_SECRET={{ COOKIE_SECRET }}
+      - TOKEN_SECRET={{ TOKEN_SECRET }}
+      - SECRET_KEY={{ SECRET_KEY }}
+      - DEFAULT_REDIS_HOST={{ REDIS_HOST }}
+      - DEFAULT_REDIS_PORT={{ REDIS_PORT }}
+      - DEFAULT_REDIS_PASSWORD={{ REDIS_PASSWORD }}
+      - DEFAULT_DB_DBHOST={{ DEFAULT_DB_DBHOST }}
+      - DEFAULT_DB_DBPORT={{ DEFAULT_DB_DBPORT }}
+      - DEFAULT_DB_DBUSER={{ DEFAULT_DB_DBUSER }}
+      - DEFAULT_DB_DBPWD={{ DEFAULT_DB_DBPWD }}
+      - READONLY_DB_DBHOST={{ READONLY_DB_DBHOST }}
+      - READONLY_DB_DBPORT={{ READONLY_DB_DBPORT }}
+      - READONLY_DB_DBUSER={{ READONLY_DB_DBUSER }}
+      - READONLY_DB_DBPWD={{ READONLY_DB_DBPWD  }}
+      - CMDB_DB_DBNAME=codo_cmdb
+      - CODO_TASK_DB_DBNAME=codo_task
+      - CODO_TASK_DB_HOST={{ DEFAULT_DB_DBHOST }}
+      - CODO_TASK_DB_PORT={{ DEFAULT_DB_DBPORT }}
+      - CODO_TASK_DB_USER={{ DEFAULT_DB_DBUSER }}
+      - CODO_TASK_DB_PWD={{ DEFAULT_DB_DBPWD }}
+    restart: always
+  config:
+    image: {{ image_pre }}/kerrigan:{{ ln_version }}
+    container_name: config
+    volumes:
+      - /var/log/supervisor/config:/var/log/supervisor
+      - /sys/fs/cgroup:/sys/fs/cgroup
+      - /opt/ops_scripts:/opt/ops_scripts
+      - {{ ln_workdir }}/ngxconf/config.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8030:80"
+    environment:
+      - COOKIE_SECRET={{ COOKIE_SECRET }}
+      - TOKEN_SECRET={{ TOKEN_SECRET }}
+      - SECRET_KEY={{ SECRET_KEY }}
+      - DEFAULT_REDIS_HOST={{ REDIS_HOST }}
+      - DEFAULT_REDIS_PORT={{ REDIS_PORT }}
+      - DEFAULT_REDIS_PASSWORD={{ REDIS_PASSWORD }}
+      - DEFAULT_DB_DBHOST={{ DEFAULT_DB_DBHOST }}
+      - DEFAULT_DB_DBPORT={{ DEFAULT_DB_DBPORT }}
+      - DEFAULT_DB_DBUSER={{ DEFAULT_DB_DBUSER }}
+      - DEFAULT_DB_DBPWD={{ DEFAULT_DB_DBPWD }}
+      - READONLY_DB_DBHOST={{ READONLY_DB_DBHOST }}
+      - READONLY_DB_DBPORT={{ READONLY_DB_DBPORT }}
+      - READONLY_DB_DBUSER={{ READONLY_DB_DBUSER }}
+      - READONLY_DB_DBPWD={{ READONLY_DB_DBPWD  }}
+      - CONFIG_DB_DBNAME=codo_kerrigan
+    restart: always
+  cron:
+    image: {{ image_pre }}/cron:{{ ln_version }}
+    container_name: cron
+    volumes:
+      - /var/log/supervisor/cron:/var/log/supervisor
+      - /sys/fs/cgroup:/sys/fs/cgroup
+      - /opt/ops_scripts:/opt/ops_scripts
+    ports:
+      - "9900:9900"
+    environment:
+      - COOKIE_SECRET={{ COOKIE_SECRET }}
+      - TOKEN_SECRET={{ TOKEN_SECRET }}
+      - SECRET_KEY={{ SECRET_KEY }}
+      - DEFAULT_REDIS_HOST={{ REDIS_HOST }}
+      - DEFAULT_REDIS_PORT={{ REDIS_PORT }}
+      - DEFAULT_REDIS_PASSWORD={{ REDIS_PASSWORD }}
+      - DEFAULT_DB_DBHOST={{ DEFAULT_DB_DBHOST }}
+      - DEFAULT_DB_DBPORT={{ DEFAULT_DB_DBPORT }}
+      - DEFAULT_DB_DBUSER={{ DEFAULT_DB_DBUSER }}
+      - DEFAULT_DB_DBPWD={{ DEFAULT_DB_DBPWD }}
+      - READONLY_DB_DBHOST={{ READONLY_DB_DBHOST }}
+      - READONLY_DB_DBPORT={{ READONLY_DB_DBPORT }}
+      - READONLY_DB_DBUSER={{ READONLY_DB_DBUSER }}
+      - READONLY_DB_DBPWD={{ READONLY_DB_DBPWD  }}
+      - CRON_DB_DBNAME=codo_cron
+    restart: always
+  domain:
+    image: {{ image_pre }}/dns:{{ ln_version }}
+    container_name: domain
+    volumes:
+      - /var/log/supervisor/dns:/var/log/supervisor
+      - /sys/fs/cgroup:/sys/fs/cgroup
+      - /opt/ops_scripts:/opt/ops_scripts
+      - {{ ln_workdir }}/ngxconf/dns.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8060:80"
+    environment:
+      - COOKIE_SECRET={{ COOKIE_SECRET }}
+      - TOKEN_SECRET={{ TOKEN_SECRET }}
+      - SECRET_KEY={{ SECRET_KEY }}
+      - DEFAULT_REDIS_HOST={{ REDIS_HOST }}
+      - DEFAULT_REDIS_PORT={{ REDIS_PORT }}
+      - DEFAULT_REDIS_PASSWORD={{ REDIS_PASSWORD }}
+      - DEFAULT_DB_DBHOST={{ DEFAULT_DB_DBHOST }}
+      - DEFAULT_DB_DBPORT={{ DEFAULT_DB_DBPORT }}
+      - DEFAULT_DB_DBUSER={{ DEFAULT_DB_DBUSER }}
+      - DEFAULT_DB_DBPWD={{ DEFAULT_DB_DBPWD }}
+      - READONLY_DB_DBHOST={{ READONLY_DB_DBHOST }}
+      - READONLY_DB_DBPORT={{ READONLY_DB_DBPORT }}
+      - READONLY_DB_DBUSER={{ READONLY_DB_DBUSER }}
+      - READONLY_DB_DBPWD={{ READONLY_DB_DBPWD }}
+      - DNS_DB_DBNAME=codo_dns
+    restart: always
+  task:
+    image: {{ image_pre }}/task:{{ ln_version }}
+    container_name: task
+    volumes:
+      - /var/log/supervisor/task:/var/log/supervisor
+      - /sys/fs/cgroup:/sys/fs/cgroup
+      - /opt/ops_scripts:/opt/ops_scripts
+      - {{ ln_workdir }}/ngxconf/task.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8020:80"
+    environment:
+      - COOKIE_SECRET={{ COOKIE_SECRET }}
+      - TOKEN_SECRET={{ TOKEN_SECRET }}
+      - SECRET_KEY={{ SECRET_KEY }}
+      - DEFAULT_REDIS_HOST={{ REDIS_HOST }}
+      - DEFAULT_REDIS_PORT={{ REDIS_PORT }}
+      - DEFAULT_REDIS_PASSWORD={{ REDIS_PASSWORD }}
+      - DEFAULT_DB_DBHOST={{ DEFAULT_DB_DBHOST }}
+      - DEFAULT_DB_DBPORT={{ DEFAULT_DB_DBPORT }}
+      - DEFAULT_DB_DBUSER={{ DEFAULT_DB_DBUSER }}
+      - DEFAULT_DB_DBPWD={{ DEFAULT_DB_DBPWD }}
+      - READONLY_DB_DBHOST={{ READONLY_DB_DBHOST }}
+      - READONLY_DB_DBPORT={{ READONLY_DB_DBPORT }}
+      - READONLY_DB_DBUSER={{ READONLY_DB_DBUSER }}
+      - READONLY_DB_DBPWD={{ READONLY_DB_DBPWD  }}
+      - DEFAULT_MQ_ADDR={{ MQ_ADDR  }}
+      - DEFAULT_MQ_PORT={{ MQ_PORT }}
+      - DEFAULT_MQ_USER={{ MQ_USER }}
+      - DEFAULT_MQ_PWD={{ MQ_PWD }}
+      - TASK_DB_DBNAME=codo_task
+    restart: always
+  tools:
+    image: {{ image_pre }}/tools:{{ ln_version }}
+    container_name: tools
+    volumes:
+      - /var/log/supervisor/tools:/var/log/supervisor
+      - /sys/fs/cgroup:/sys/fs/cgroup
+      - {{ ln_workdir }}/ngxconf/tools.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8040:80"
+    environment:
+      - COOKIE_SECRET={{ COOKIE_SECRET }}
+      - TOKEN_SECRET={{ TOKEN_SECRET }}
+      - SECRET_KEY={{ SECRET_KEY }}
+      - DEFAULT_REDIS_HOST={{ REDIS_HOST }}
+      - DEFAULT_REDIS_PORT={{ REDIS_PORT }}
+      - DEFAULT_REDIS_PASSWORD={{ REDIS_PASSWORD }}
+      - DEFAULT_DB_DBHOST={{ DEFAULT_DB_DBHOST }}
+      - DEFAULT_DB_DBPORT={{ DEFAULT_DB_DBPORT }}
+      - DEFAULT_DB_DBUSER={{ DEFAULT_DB_DBUSER }}
+      - DEFAULT_DB_DBPWD={{ DEFAULT_DB_DBPWD }}
+      - READONLY_DB_DBHOST={{ READONLY_DB_DBHOST }}
+      - READONLY_DB_DBPORT={{ READONLY_DB_DBPORT }}
+      - READONLY_DB_DBUSER={{ READONLY_DB_DBUSER }}
+      - READONLY_DB_DBPWD={{ READONLY_DB_DBPWD  }}
+      - MONITOR_DB_DBNAME=codo_tools
+    restart: always
+  mysql:
+    image: {{ image_pre }}/mysql:5.7
+    container_name: mysql
+    volumes:
+      - /data/mysql:/var/lib/mysql
+      - /data/mysql_conf:/etc/mysql/conf.d
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD={{ MYSQL_ROOT_PASSWORD }}
+    restart: always
+  dnsmasq:
+    image: {{ image_pre }}/dnsmasq
+    container_name: dnsmasq
+    volumes:
+      - {{ ln_workdir }}/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf
+    environment:
+      - HTTP_USER={{ DNS_HTTP_USER }}
+      - HTTP_PASS={{ DNS_HTTP_PASS }}
+    network_mode: host
+    restart: always
+  mq:
+    image: {{ image_pre }}/mq
+    container_name: mq
+    volumes:
+      - /data/mq:/bitnami
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_PASSWORD={{ MQ_PWD }}
+      - RABBITMQ_USERNAME={{ MQ_USER }}
+    restart: always
+  redis:
+    image: {{ image_pre }}/redis
+    container_name: redis
+    volumes:
+      - /data/redis:/bitnami/redis/data
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD={{ REDIS_PASSWORD }}
+    restart: always
+  gateway:
+    image: {{ image_pre }}/gateway:{{ ln_version }}
+    container_name: gateway
+    volumes:
+      - {{ ln_workdir }}/gateway/configs.lua:/usr/local/openresty/nginx/lua/configs.lua
+      - {{ ln_workdir }}/gateway/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - {{ ln_workdir}}/ngxconf/gw.conf:/usr/local/openresty/nginx/conf/conf.d/gw.conf
+      - /var/log/nginx:/var/log/nginx
+    network_mode: host
+    restart: always

@@ -1,0 +1,7 @@
+stages:
+  - syntax_check
+
+syntax_check:
+  stage: syntax_check
+  script:
+    - make main

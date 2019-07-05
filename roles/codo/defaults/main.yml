@@ -1,0 +1,45 @@
+---
+ln_workdir: /usr/share/ln
+codo_core_ip: 172.20.0.101
+ln_version: devel
+image_pre: opencodo
+
+COOKIE_SECRET: 12345678cookie
+TOKEN_SECRET: 12345678token
+SECRET_KEY: 8b888a62-3edb-4920-b446-697a472b4001
+REDIS_HOST: 172.20.0.101
+REDIS_PORT: 6379
+REDIS_PASSWORD: 12345678
+DEFAULT_DB_DBHOST: 172.20.0.101
+DEFAULT_DB_DBPORT: 3306
+DEFAULT_DB_DBUSER: root
+DEFAULT_DB_DBPWD: 12345678
+READONLY_DB_DBHOST: 172.20.0.101
+READONLY_DB_DBPORT: 3306
+READONLY_DB_DBUSER: root
+READONLY_DB_DBPWD: 12345678
+MQ_ADDR: 172.20.0.101
+MQ_PORT: 5672
+MQ_USER: root
+MQ_PWD: 12345678
+
+DNS_HTTP_USER: talk
+DNS_HTTP_PASS: talk.com
+
+MYSQL_ROOT_PASSWORD: 12345678
+
+MG_DOMAIN: mg.ops.talk.com
+CRON_DOMAIN: cron.ops.talk.com
+TASK_DOMAIN: task.ops.talk.com
+CMDB2_DOMAIN: cmdb2.ops.talk.com
+CMDB1_DOMAIN: cmdb.ops.talk.com
+TOOLS_DOMAIN: tools.ops.talk.com
+DNS_DOMAIN: dns.ops.talk.com
+CONFIG_DOMAIN: kerrigan.ops.talk.com
+UI_DOMAIN: ui.ops.talk.com
+GW_DOMAIN: gw.ops.talk.com
+K8S_DOMAIN: k8s.ops.talk.com
+
+CODO_USER: admin
+# md5 -s 12345678 | awk '{print $NF}'
+CODO_PASS: 25d55ad283aa400af464c76d713c07ad

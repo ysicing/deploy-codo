@@ -1,0 +1,26 @@
+---
+- name: Create docker service systemd directory if it doesn't exist
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+
+- name: Write docker proxy drop-in
+  template:
+    src: http-proxy.conf.j2
+    dest: /etc/systemd/system/docker.service.d/http-proxy.conf
+  when: http_proxy is defined or https_proxy is defined
+
+- name: Check docker dir
+  file: path=/etc/docker state=directory mode=0755
+
+- name: Check if daemon is existing
+  stat: path=/etc/docker/daemon.json
+  register: docker_daemon_check
+
+- name: Write docker daemon For Debian/Ubuntu
+  template: 
+    src: daemon.json.j2 
+    dest: /etc/docker/daemon.json
+  when:  docker_daemon_check.stat.isreg is not defined
+
+

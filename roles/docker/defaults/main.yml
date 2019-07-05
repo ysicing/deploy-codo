@@ -1,0 +1,17 @@
+---
+LOG_DRIVER: "json-file"
+LOG_LEVEL: "warn"
+LOG_MAX_SIZE: "20m"
+LOG_MAX_FILE: 2
+
+STORAGE_DIR: "/var/lib/docker"
+
+docker_min_version: 1.12.6 
+docker_bin_dir: /usr/bin/docker
+BIP: "172.30.42.1/16"
+
+DOCKER_HOST_TCP: "tcp://127.0.0.1:2376"
+
+DOCKER_HOST_SOCK: "unix:///var/run/docker.sock"
+
+ENABLE_REMOTE_API: true

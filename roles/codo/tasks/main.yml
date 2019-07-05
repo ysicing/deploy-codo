@@ -1,0 +1,89 @@
+---
+- name: create ln config
+  template:
+    src: docker-compose.yaml.j2
+    dest: "{{ ln_workdir }}/docker-compose.yaml"
+
+- name: copy init 
+  template:
+    src: init.sh
+    dest: "{{ ln_workdir }}/init.sh"
+    mode: 0777
+
+- name: copy db init 
+  template:
+    src: db.init
+    dest: "{{ ln_workdir }}/sql/db.init"
+    mode: 0777
+
+- name: copy dns conf 
+  template:
+    src: dnsmasq.conf
+    dest: "{{ ln_workdir }}/dnsmasq/dnsmasq.conf"
+
+- name: copy gateway lua
+  template:
+    src: configs.lua
+    dest: "{{ ln_workdir }}/gateway/configs.lua"
+
+- name: copy gateway nginx conf
+  template:
+    src: nginx.conf
+    dest: "{{ ln_workdir }}/gateway/nginx.conf"
+
+- name: copy gateway gw conf
+  template:
+    src: gw.conf
+    dest: "{{ ln_workdir }}/ngxconf/gw.conf"
+
+- name: copy admin conf
+  template:
+    src: admin.conf
+    dest: "{{ ln_workdir }}/ngxconf/admin.conf"
+
+- name: copy cmdb conf
+  template:
+    src: cmdb.conf
+    dest: "{{ ln_workdir }}/ngxconf/cmdb.conf"
+
+- name: copy config conf
+  template:
+    src: config.conf
+    dest: "{{ ln_workdir }}/ngxconf/config.conf"
+
+- name: copy dns conf
+  template:
+    src: dns.conf
+    dest: "{{ ln_workdir }}/ngxconf/dns.conf"
+
+- name: copy task conf
+  template:
+    src: task.conf
+    dest: "{{ ln_workdir }}/ngxconf/task.conf"
+
+- name: copy tools conf
+  template:
+    src: admin.conf
+    dest: "{{ ln_workdir }}/ngxconf/tools.conf"
+
+- name: copy init sql
+  copy:
+    src: init.sql
+    dest: "{{ ln_workdir }}/sql/init.sql"
+
+- name: copy user sql
+  template:
+    src: user.sql
+    dest: "{{ ln_workdir }}/sql/user.sql"
+
+
+- name: init db
+  shell: "bash {{ ln_workdir }}/init.sh"
+  register: init_db_task_result
+  until: init_db_task_result is succeeded
+  retries: 3
+
+- name: init user info
+  shell: "bash {{ ln_workdir }}/sql/db.init"
+
+- import_tasks: end.yml
