@@ -3,8 +3,6 @@ Deploy a Production Ready DevOps Platform
 
 # Usage
 
-> 仅在Debian 9上测试过,Debian 10需要等待https://get.docker.com/更新
-
 ```
 git clone https://github.com/ysicing/deploy-codo.git
 vagrant up 
