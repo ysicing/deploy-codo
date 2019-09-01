@@ -1,0 +1,15 @@
+name: BuildDockerImage
+on:
+  push:
+  schedule:
+    - cron: '0 4 */1 * *'
+jobs:
+  build:
+    name: build sdk docker image
+    runs-on: 	ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+
+      

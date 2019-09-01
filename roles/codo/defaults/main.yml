@@ -1,7 +1,7 @@
 ---
 ln_workdir: /usr/share/ln
 codo_core_ip: 172.20.0.101
-ln_version: devel
+ln_version: latest
 image_pre: opencodo
 
 COOKIE_SECRET: 12345678cookie

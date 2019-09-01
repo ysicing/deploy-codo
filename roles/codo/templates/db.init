@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker exec -i mysql sh -c 'exec mysql -uroot -p{{ MYSQL_ROOT_PASSWORD }} -D codo_admin' < {{ ln_workdir }}/sql/init.sql
-docker exec -i mysql sh -c 'exec mysql -uroot -p{{ MYSQL_ROOT_PASSWORD }} -D codo_admin' < {{ ln_workdir }}/sql/user.sql
+docker exec -i mysql sh -c 'exec mysql -uroot -p{{ MYSQL_ROOT_PASSWORD }} -D codo_admin' < {{ ln_workdir }}/sql/init.sql --default-character-set=utf8
+docker exec -i mysql sh -c 'exec mysql -uroot -p{{ MYSQL_ROOT_PASSWORD }} -D codo_admin' < {{ ln_workdir }}/sql/user.sql --default-character-set=utf8
