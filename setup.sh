@@ -134,7 +134,7 @@ command_exists() {
 }
 
 get_default_ip(){
-	ip=$(ip addr | grep inet | grep -Ev 'inet6|docker0| lo' | awk '{print $2}' | awk -F/ '{print $1}' | head -1)
+	ip=$(ip addr | grep inet | grep -Ev 'inet6|docker0| lo' | awk '{print $2}' | awk -F/ '{print $1}' | grep -v "10.0.2.15" | head -1)
 	echo ${ip}
 }
 
