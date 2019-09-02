@@ -5,6 +5,7 @@ Deploy a Production Ready DevOps Platform
 
 ```
 git clone https://github.com/ysicing/deploy-codo.git
+cd deploy-codo
 vagrant up 
 ssh 172.20.0.101 (root/vagrant)
 cd /opt/codo
